@@ -21,9 +21,12 @@ public class PhoneBook {
     }
 
     public void add(String name, String phoneNumber) {
+       // this method checks to see if the phonebook already has the name stored
+        // key = name value = an array list that will hold phone numbers
         if (!phoneBook.containsKey(name)) {
             phoneBook.put(name, new ArrayList<>());
         }
+        // its getting the arraylist that goes with name, then adding an array list for the number
         phoneBook.get(name).add(phoneNumber);
     }
 
@@ -32,11 +35,10 @@ public class PhoneBook {
             phoneBook.put(name, new ArrayList<>());
         }
         Collections.addAll(phoneBook.get(name), phoneNumbers);
-
-
     }
 
     public void remove(String name) {
+        phoneBook.remove(name);
     }
 
     public Boolean hasEntry(String name, String phoneNumber) {
@@ -48,18 +50,25 @@ public class PhoneBook {
     }
 
     public List<String> lookup(String name) {
-        return null;
+        return phoneBook.getOrDefault(name, new ArrayList<>());
     }
 
     public String reverseLookup(String phoneNumber)  {
+        for (Map.Entry<String, List<String>> entry : phoneBook.entrySet()) {
+            if (entry.getValue().contains(phoneNumber)) {
+                return entry.getKey();
+            }
+        }
         return null;
     }
 
-    public List<String> getAllContactNames() {
-        return null;
+    public List<String>getAllContactNames() {
+        return new ArrayList<>();
     }
+
 
     public Map<String, List<String>> getMap() {
-        return null;
+        return new HashMap<>(phoneBook);
     }
+
 }
